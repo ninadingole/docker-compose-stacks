@@ -5,6 +5,7 @@ services:
     environment:
       POSTGRES_PASSWORD: admin
       POSTGRES_USER: admin
+    restart: always
     volumes:
       - "./postgre/data:/var/lib/postgresql/data"
     ports:
@@ -17,6 +18,7 @@ services:
       SONAR_JDBC_URL: jdbc:postgresql://db:5432/postgres
       SONAR_JDBC_USERNAME: admin
       SONAR_JDBC_PASSWORD: admin
+    restart: always
     volumes:
       - "./sonarqube/data:/opt/sonarqube/data"
       - "./sonarqube/extensions:/opt/sonarqube/extensions"
