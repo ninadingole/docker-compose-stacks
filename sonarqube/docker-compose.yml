@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
   db:
     image: postgres
@@ -20,11 +20,21 @@ services:
       SONAR_JDBC_PASSWORD: admin
     restart: always
     volumes:
-      - "./sonarqube/data:/opt/sonarqube/data"
-      - "./sonarqube/extensions:/opt/sonarqube/extensions"
-      - "./sonarqube/logs:/opt/sonarqube/logs"
+      - type: volume
+        source: "sonarqube_data"
+        target: "/opt/sonarqube/data"
+      - type: volume
+        source: "sonarqube_extensions"
+        target: "/opt/sonarqube/extensions"
+      - type: volume
+        source: "sonarqube_logs"
+        target: "/opt/sonarqube/logs"
     links:
       - db:db
     ports:
       - 9000:9000
 
+volumes: 
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
