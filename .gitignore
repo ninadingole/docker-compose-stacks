@@ -1,2 +1,4 @@
 sonarqube/postgre/**
 sonarqube/sonarqube/**
+
+**/.idea/**
