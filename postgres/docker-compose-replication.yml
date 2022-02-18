@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  master:
+    image: postgres:13.3
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: data_service
+    volumes:
+      - ./master.conf:/etc/postgresql/postgresql.conf
+      - ./pg_hba.conf:/etc/postgresql/pg_hba.conf
+      - ./setup-master.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+    ports:
+      - "5432:5432"
+    command:
+      - "postgres"
+      - "-c"
+      - "config_file=/etc/postgresql/postgresql.conf"
+
+  slave:
+    image: postgres:13.3
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: data_service
+    volumes:
+      - ./slave.conf:/etc/postgresql/postgresql.conf
+      - ./pg_hba.conf:/etc/postgresql/pg_hba.conf
+      - ./setup-slave.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+    ports:
+      - "54321:5432"
+    command:
+      - "postgres"
+      - "-c"
+      - "config_file=/etc/postgresql/postgresql.conf"
