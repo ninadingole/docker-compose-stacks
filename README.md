@@ -15,3 +15,7 @@ use `-d` to start compose in detach mode
 Raise a pull request if you are using docker compose stack and automated it for your daily software development work.
 Happy to review and merge!
 Cheers :D
+
+### Infrastructure model
+
+![Infrastructure model](.infragenie/infrastructure_model.png)
