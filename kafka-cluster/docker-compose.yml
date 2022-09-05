@@ -1,0 +1,137 @@
+version: '3'
+
+services:
+  zookeeper-kafka:
+    image: confluentinc/cp-zookeeper:latest
+    ports:
+      - '2181:2181'
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    healthcheck:
+      # fake healthcheck just to have one to simplify status check
+      test: ['CMD', 'date']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  # docs at: https://registry.hub.docker.com/r/wurstmeister/kafka
+  kafka-broker-1:
+    image: wurstmeister/kafka:latest
+    restart: always
+    depends_on:
+      - zookeeper-kafka
+    ports:
+      - '9092:9092'
+    volumes:
+      # It's the only way to deal with Kafka non-static exposed ports to host
+      # See: https://github.com/wurstmeister/kafka-docker/blob/master/start-kafka.sh#L65-L76
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper-kafka:2181'
+      PORT_COMMAND: 'docker port $$(hostname) 9092/tcp | cut -d: -f2'
+      KAFKA_LISTENERS: 'LISTENER_INTERNAL://kafka-broker-1:29092,LISTENER_HOST://:9092'
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_INTERNAL://kafka-broker-1:29092,LISTENER_HOST://localhost:_{PORT_COMMAND}
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_INTERNAL:PLAINTEXT,LISTENER_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_INTERNAL
+      KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka-broker-1 -Dcom.sun.management.jmxremote.rmi.port=1099"
+      JMX_PORT: 1099
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      KAFKA_CREATE_TOPICS: 'test:3:3'
+    healthcheck:
+      test:
+        [
+          'CMD',
+          '/opt/kafka/bin/kafka-topics.sh',
+          '--list',
+          '--bootstrap-server',
+          'kafka-broker-1:29092',
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  kafka-broker-2:
+    image: wurstmeister/kafka:latest
+    restart: always
+    depends_on:
+      - zookeeper-kafka
+    ports:
+      - '9093:9092'
+    volumes:
+      # It's the only way to deal with Kafka non-static exposed ports to host
+      # See: https://github.com/wurstmeister/kafka-docker/blob/master/start-kafka.sh#L65-L76
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper-kafka:2181'
+      PORT_COMMAND: 'docker port $$(hostname) 9092/tcp | cut -d: -f2'
+      KAFKA_LISTENERS: 'LISTENER_INTERNAL://kafka-broker-2:29092,LISTENER_HOST://:9092'
+      KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka-broker-2 -Dcom.sun.management.jmxremote.rmi.port=1099"
+      JMX_PORT: 1099
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_INTERNAL://kafka-broker-2:29092,LISTENER_HOST://localhost:_{PORT_COMMAND}
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_INTERNAL:PLAINTEXT,LISTENER_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_INTERNAL
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+    healthcheck:
+      test:
+        [
+          'CMD',
+          '/opt/kafka/bin/kafka-topics.sh',
+          '--list',
+          '--bootstrap-server',
+          'kafka-broker-2:29092',
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  kafka-broker-3:
+    image: wurstmeister/kafka:latest
+    restart: always
+    depends_on:
+      - zookeeper-kafka
+    ports:
+      - '9094:9092'
+    volumes:
+      # It's the only way to deal with Kafka non-static exposed ports to host
+      # See: https://github.com/wurstmeister/kafka-docker/blob/master/start-kafka.sh#L65-L76
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      KAFKA_BROKER_ID: 3
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper-kafka:2181'
+      PORT_COMMAND: 'docker port $$(hostname) 9092/tcp | cut -d: -f2'
+      KAFKA_LISTENERS: 'LISTENER_INTERNAL://kafka-broker-3:29092,LISTENER_HOST://:9092'
+      KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka-broker-3 -Dcom.sun.management.jmxremote.rmi.port=1099"
+      JMX_PORT: 1099
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_INTERNAL://kafka-broker-3:29092,LISTENER_HOST://localhost:_{PORT_COMMAND}
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_INTERNAL:PLAINTEXT,LISTENER_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_INTERNAL
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+    healthcheck:
+      test:
+        [
+          'CMD',
+          '/opt/kafka/bin/kafka-topics.sh',
+          '--list',
+          '--bootstrap-server',
+          'kafka-broker-3:29092',
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  kafka-ui:
+    container_name: kafka-ui
+    image: provectuslabs/kafka-ui:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - zookeeper-kafka
+      - kafka-broker-1
+      - kafka-broker-2
+      - kafka-broker-3
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-broker-1:29092, kafka-broker-2:29092, kafka-broker-3:29092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper-kafka:2181
+      KAFKA_CLUSTERS_0_JMXPORT: 1099
