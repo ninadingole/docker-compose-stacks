@@ -1,0 +1,16 @@
+{
+  "name": "movies-db-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "plugin.name": "pgoutput",
+    "tasks.max": "1",
+    "database.hostname": "postgres",
+    "database.port": "5432",
+    "database.user": "postgres",
+    "database.password": "postgres",
+    "database.dbname": "movies_db",
+    "database.server.name": "postgres",
+    "database.include.list": "movies_db",
+    "table.include.list": "public.movies"
+  }
+}
