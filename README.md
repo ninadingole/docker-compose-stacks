@@ -16,6 +16,3 @@ Raise a pull request if you are using docker compose stack and automated it for 
 Happy to review and merge!
 Cheers :D
 
-### Infrastructure model
-
-![Infrastructure model](.infragenie/infrastructure_model.png)
