@@ -29,27 +29,6 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_JMX_PORT: 9101
       KAFKA_JMX_HOSTNAME: localhost
-
-  postgres:
-    image: postgres:latest
-    restart: always
-    container_name: postgres
-    hostname: postgres
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: movies_db
-    healthcheck:
-      test: ["CMD", "psql", "-U", "postgres", "-c", "SELECT 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    volumes:
-      - ./scripts:/docker-entrypoint-initdb.d
-      - ./pg.conf:/etc/postgresql/postgresql.conf
-
   debezium:
     image: debezium/connect:latest
     restart: always
@@ -99,3 +78,22 @@ services:
       KAFKA_REST_BOOTSTRAP_SERVERS: 'broker:29092'
       KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
 
+  postgres:
+      image: postgres:latest
+      restart: always
+      container_name: postgres
+      hostname: postgres
+      ports:
+        - "5432:5432"
+      environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_DB: movies_db
+      command: ["postgres", "-c", "wal_level=logical"]
+      healthcheck:
+        test: ["CMD", "psql", "-U", "postgres", "-c", "SELECT 1"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
+      volumes:
+        - ./scripts:/docker-entrypoint-initdb.d

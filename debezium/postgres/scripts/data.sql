@@ -1,7 +1,4 @@
 
-ALTER SYSTEM SET wal_level = logical;
-
-
 CREATE TABLE IF NOT EXISTS movies (
     id bigint PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
