@@ -4,6 +4,7 @@ services:
   zookeeper:
     image: confluentinc/cp-zookeeper:7.3.1
     hostname: zookeeper
+    container_name: zookeeper
     ports:
       - "2181:2181"
     environment:
@@ -46,6 +47,8 @@ services:
   debezium:
     image: debezium/connect:latest
     restart: always
+    container_name: debezium
+    hostname: debezium
     depends_on:
       postgres:
         condition: service_healthy
@@ -87,7 +90,7 @@ services:
       start_period: 10s
       interval: 10s
       retries: 20
-      test: curl --user superUser:superUser --fail --silent --insecure https://schema-registry:8081/subjects --output /dev/null || exit 1
+      test: curl --user superUser:superUser --fail --silent --insecure http://localhost:8081/subjects --output /dev/null || exit 1
 
   rest-proxy:
     image: confluentinc/cp-kafka-rest:7.3.1
@@ -95,13 +98,27 @@ services:
       broker:
         condition: service_healthy
     ports:
-      - 8082:8082
+      - "8082:8082"
     hostname: rest-proxy
     container_name: rest-proxy
     environment:
       KAFKA_REST_HOST_NAME: rest-proxy
       KAFKA_REST_BOOTSTRAP_SERVERS: 'broker:29092'
       KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
+
+  debezium-ui:
+    image: debezium/debezium-ui:latest
+    restart: always
+    container_name: debezium-ui
+    hostname: debezium-ui
+    depends_on:
+      debezium:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      KAFKA_CONNECT_URIS: http://debezium:8083
+
 
   postgres:
       image: postgres:latest
