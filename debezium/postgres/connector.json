@@ -10,7 +10,14 @@
     "database.password": "postgres",
     "database.dbname": "movies_db",
     "database.server.name": "postgres",
-    "database.include.list": "movies_db",
-    "table.include.list": "public.movies"
+    "table.include.list": "public.movies",
+    "database.history.kafka.bootstrap.servers": "kafka:9092",
+    "database.history.kafka.topic": "schema-changes.movies",
+    "topic.prefix": "postgres",
+    "topic.creation.enable": "true",
+    "topic.creation.default.replication.factor": "1",
+    "topic.creation.default.partitions": "1",
+    "topic.creation.default.cleanup.policy": "delete",
+    "topic.creation.default.retention.ms": "604800000"
   }
 }

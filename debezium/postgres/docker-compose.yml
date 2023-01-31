@@ -1,19 +1,26 @@
-version: "3"
+version: "3.9"
 
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:7.2.1
+    image: confluentinc/cp-zookeeper:7.3.1
     hostname: zookeeper
     ports:
       - "2181:2181"
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    healthcheck:
+      test: echo srvr | nc zookeeper 2181 || exit 1
+      start_period: 10s
+      retries: 20
+      interval: 10s
   broker:
-    image: confluentinc/cp-kafka:7.2.1
+    image: confluentinc/cp-kafka:7.3.1
     hostname: broker
+    container_name: broker
     depends_on:
-      - zookeeper
+      zookeeper:
+        condition: service_healthy
     ports:
       - "29092:29092"
       - "9092:9092"
@@ -27,14 +34,23 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_JMX_PORT: 9101
       KAFKA_JMX_HOSTNAME: localhost
+    healthcheck:
+      test: nc -z localhost 9092 || exit -1
+      start_period: 15s
+      interval: 5s
+      timeout: 10s
+      retries: 10
   debezium:
     image: debezium/connect:latest
     restart: always
     depends_on:
-      - postgres
-      - broker
+      postgres:
+        condition: service_healthy
+      broker:
+        condition: service_healthy
     ports:
       - "8083:8083"
     environment:
@@ -48,27 +64,36 @@ services:
       ENABLE_DEBEZIUM_SCRIPTING: "true"
     healthcheck:
       test: ["CMD", "curl", "--silent", "--fail", "-X", "GET", "http://localhost:8083/connectors"]
+      start_period: 10s
       interval: 10s
       timeout: 5s
       retries: 5
 
   schema-registry:
-    image: confluentinc/cp-schema-registry:7.2.1
+    image: confluentinc/cp-schema-registry:7.3.1
     hostname: schema-registry
     container_name: schema-registry
     depends_on:
-      - broker
+      broker:
+        condition: service_healthy
     ports:
       - "8081:8081"
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker:9092'
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: broker:29092
       SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
 
+    healthcheck:
+      start_period: 10s
+      interval: 10s
+      retries: 20
+      test: curl --user superUser:superUser --fail --silent --insecure https://schema-registry:8081/subjects --output /dev/null || exit 1
+
   rest-proxy:
-    image: confluentinc/cp-kafka-rest:7.2.1
+    image: confluentinc/cp-kafka-rest:7.3.1
     depends_on:
-      - broker
+      broker:
+        condition: service_healthy
     ports:
       - 8082:8082
     hostname: rest-proxy
