@@ -30,20 +30,20 @@ use `-d` to start compose in detach mode
 
 ## Stacks
 
-| Stack                   | Standalone | Cluster |
-|-------------------------|------------|---------|
-| Apache Kafka            | ✅          | ✅       |
-| Debezium - Postgres     | ✅          |         |
-| Debezium - MySQL        | ✅          |         |
-| Jaeger                  | ✅          |         |
-| Postgres                | ✅          | ✅       |
-| Prometheus + Grafana    | ✅          |         |
-| Prometheus Push Gateway | ✅          |         |
-| ScyllaDB                | ✅          | ✅       |
-| SonarQube               | ✅          |         |
-| KSQLDB      [WIP]       |           |         |
-| MySQL      [WIP]        |           |         |
-| MongoDB      [WIP]      |           |         |
+| Stack                            | Standalone | Cluster |
+|----------------------------------|------------|---------|
+| Apache Kafka                     | ✅          | ✅       |
+| Debezium - Postgres              | ✅          |         |
+| Debezium - MySQL                 | ✅          |         |
+| Jaeger                           | ✅          |         |
+| Postgres                         | ✅          | ✅       |
+| Prometheus + Grafana             | ✅          |         |
+| Prometheus Push Gateway          | ✅          |         |
+| [ScyllaDB](./scylladb/Readme.md) | ✅          | ✅       |
+| SonarQube                        | ✅          |         |
+| KSQLDB      [WIP]                |           |         |
+| MySQL      [WIP]                 |           |         |
+| MongoDB      [WIP]               |           |         |
 
 ## How to contribute
 
