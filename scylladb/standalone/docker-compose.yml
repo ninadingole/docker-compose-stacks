@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  scylladb:
+    image: scylladb/scylla:latest
+    container_name: scylladb
+    ports:
+      - '9042:9042'
+      - '9160:9160'
+      - '7004:7000'
+      - '7005:7001'
+      - '10000:10000'
+    volumes:
+      - ./data:/var/lib/scylla
+    environment:
+      - SCYLLA_ARGS=--developer-mode 1
+    healthcheck:
+      test: cqlsh -e 'SELECT now() FROM system.local' || exit -1
+      start_period: 15s
+      interval: 5s
+      timeout: 10s
+      retries: 5

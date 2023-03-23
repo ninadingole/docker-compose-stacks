@@ -1,0 +1,48 @@
+version: '3.9'
+
+services:
+  scylladb-master:
+    image: scylladb/scylla:latest
+    container_name: scylladb-master
+    ports:
+      - '9042:9042'
+      - '9160:9160'
+      - '7004:7000'
+      - '7005:7001'
+      - '10000:10000'
+    volumes:
+      - ./data-master:/var/lib/scylla
+    environment:
+      - SCYLLA_ARGS=--developer-mode 1
+    healthcheck:
+      test: cqlsh -e 'SELECT now() FROM system.local' || exit -1
+      start_period: 15s
+      interval: 5s
+      timeout: 10s
+      retries: 10
+
+  scylladb-node1:
+    image: scylladb/scylla:latest
+    container_name: scylladb-node1
+    depends_on:
+      scylladb-master:
+        condition: service_healthy
+    ports:
+      - '9043:9042'
+      - '9161:9160'
+      - '7006:7000'
+      - '7007:7001'
+      - '10001:10000'
+    volumes:
+      - ./data-node1:/var/lib/scylla
+    environment:
+      - SCYLLA_ARGS=--developer-mode 1
+    command: --seeds=scylladb-master
+    healthcheck:
+      test: cqlsh -e 'SELECT now() FROM system.local' || exit -1
+      start_period: 15s
+      interval: 5s
+      timeout: 10s
+      retries: 10
+
+
