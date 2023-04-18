@@ -5,6 +5,7 @@ and uses confluent zookeeper, broker, schema registry and rest proxy.
 
 ### Prerequisites
 - Docker
+- Docker Compose
 
 
 ### Running the Stack
