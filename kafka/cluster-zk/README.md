@@ -7,7 +7,7 @@ The configurations are bare minimum to start the server and could be changed bas
 
 There is also a Kafka UI application available at http://localhost:8080
 
-![](../images/multi-broker-kafka-cluster.png)
+![](../../images/multi-broker-kafka-cluster.png)
 
 ### How to start
     
