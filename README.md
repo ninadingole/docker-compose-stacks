@@ -37,6 +37,7 @@ use `-d` to start compose in detach mode
 | Debezium - Postgres              | ✅         |         |
 | Debezium - MySQL                 | ✅         |         |
 | Jaeger                           | ✅         |         |
+| [Metabase](./metabase/README.md) | ✅         |         |
 | Postgres                         | ✅         |  ✅     |
 | Prometheus + Grafana             | ✅         |         |
 | Prometheus Push Gateway          | ✅         |         |
