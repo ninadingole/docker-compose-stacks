@@ -31,23 +31,23 @@ use `-d` to start compose in detach mode
 ## Stacks
 
 | Stack                            | Standalone | Cluster |
-|----------------------------------|------------|---------|
-| Apache Kafka                     | ✅          | ✅       |
-| Debezium - Postgres              | ✅          |         |
-| Debezium - MySQL                 | ✅          |         |
-| Jaeger                           | ✅          |         |
-| Postgres                         | ✅          | ✅       |
-| Prometheus + Grafana             | ✅          |         |
-| Prometheus Push Gateway          | ✅          |         |
-| [ScyllaDB](./scylladb/Readme.md) | ✅          | ✅       |
-| SonarQube                        | ✅          |         |
-| KSQLDB      [WIP]                |           |         |
-| MySQL      [WIP]                 |           |         |
-| MongoDB      [WIP]               |           |         |
+| -------------------------------- | ---------- | ------- |
+| Apache Kafka                     | ✅         |  ✅     |
+| Apache Kafka Kraft               | ✅         |         |
+| Debezium - Postgres              | ✅         |         |
+| Debezium - MySQL                 | ✅         |         |
+| Jaeger                           | ✅         |         |
+| Postgres                         | ✅         |  ✅     |
+| Prometheus + Grafana             | ✅         |         |
+| Prometheus Push Gateway          | ✅         |         |
+| [ScyllaDB](./scylladb/Readme.md) | ✅         |  ✅     |
+| SonarQube                        | ✅         |         |
+| KSQLDB      [WIP]                |            |         |
+| MySQL      [WIP]                 |            |         |
+| MongoDB      [WIP]               |            |         |
 
 ## How to contribute
 
 Raise a pull request if you are using docker compose stack and automated it for your daily software development work.
 Happy to review and merge!
 Cheers :D
-
