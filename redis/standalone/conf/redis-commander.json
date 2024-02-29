@@ -1,0 +1,18 @@
+{
+  "connections": [
+    {
+      "label": "standalone",
+      "host": "redis",
+      "port": 6379,
+      "password": "password",
+      "dbIndex": 0
+    },
+    {
+      "label": "replica",
+      "host": "redis-replica",
+      "port": 6379,
+      "password": "password",
+      "dbIndex": 0
+    }
+  ]
+}

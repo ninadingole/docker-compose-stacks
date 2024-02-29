@@ -31,21 +31,23 @@ use `-d` to start compose in detach mode
 ## Stacks
 
 | Stack                            | Standalone | Cluster |
-| -------------------------------- | ---------- | ------- |
-| Apache Kafka                     | ✅         |  ✅     |
-| Apache Kafka Kraft               | ✅         |         |
-| Debezium - Postgres              | ✅         |         |
-| Debezium - MySQL                 | ✅         |         |
-| Jaeger                           | ✅         |         |
-| [Metabase](./metabase/README.md) | ✅         |         |
-| Postgres                         | ✅         |  ✅     |
-| Prometheus + Grafana             | ✅         |         |
-| Prometheus Push Gateway          | ✅         |         |
-| [ScyllaDB](./scylladb/Readme.md) | ✅         |  ✅     |
-| SonarQube                        | ✅         |         |
-| KSQLDB      [WIP]                |            |         |
-| MySQL      [WIP]                 |            |         |
-| MongoDB      [WIP]               |            |         |
+|----------------------------------|------------|---------|
+| Apache Kafka                     | ✅          | ✅       |
+| Apache Kafka Kraft               | ✅          |         |
+| Debezium - Postgres              | ✅          |         |
+| Debezium - MySQL                 | ✅          |         |
+| Jaeger                           | ✅          |         |
+| [Metabase](./metabase/README.md) | ✅          |         |
+| Postgres                         | ✅          | ✅       |
+| Prometheus + Grafana             | ✅          |         |
+| Prometheus Push Gateway          | ✅          |         |
+| [ScyllaDB](./scylladb/Readme.md) | ✅          | ✅       |
+| SonarQube                        | ✅          |         |
+| KSQLDB      [Planned]            |            |         |
+| MySQL      [Planned]             |            |         |
+| MongoDB      [Planned]           |            |         |
+| CockroachDB  [Planned]           |            |         |
+| Redis [In-Progress]              |            |         |
 
 ## How to contribute
 
