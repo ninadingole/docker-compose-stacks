@@ -1,0 +1,49 @@
+version: '3.9'
+
+services:
+  redis:
+    build:
+      context: ./docker
+      dockerfile: redis.Dockerfile
+    container_name: redis
+    ports:
+      - '6379:6379'
+    volumes:
+      - ./data:/data
+      - .conf/redis.conf:/usr/local/etc/redis/redis.conf
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    healthcheck:
+      test: redis-cli ping
+      start_period: 15s
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
+  redis-replica:
+    build:
+      context: ./docker
+      dockerfile: redis.Dockerfile
+    container_name: redis-replica
+    ports:
+      - '6380:6379'
+    volumes:
+      - ./data-replica:/data
+      - .conf/redis-replica.conf:/usr/local/etc/redis/redis.conf
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf", "--slaveof", "redis", "6379"]
+    healthcheck:
+      test: redis-cli ping
+      start_period: 15s
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
+
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: ghcr.io/joeferner/redis-commander:latest
+    restart: always
+    volumes:
+      - ./conf/redis-commander.json:/redis-commander/config/local-production.json
+    ports:
+      - "8081:8081"
