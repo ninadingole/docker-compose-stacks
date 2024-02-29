@@ -47,7 +47,7 @@ use `-d` to start compose in detach mode
 | MySQL      [Planned]                     |            |         |
 | MongoDB      [Planned]                   |            |         |
 | CockroachDB  [Planned]                   |            |         |
-| [Redis](./redis/README.md) [In-Progress] |            |         |
+| [Redis](./redis/README.md) [In-Progress] | ✅          |         |
 
 ## How to contribute
 
