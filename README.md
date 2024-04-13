@@ -48,6 +48,7 @@ use `-d` to start compose in detach mode
 | MongoDB      [Planned]                   |            |         |
 | CockroachDB  [Planned]                   |            |         |
 | [Redis](./redis/README.md) [In-Progress] | ✅          |         |
+| [Weaviate](./weaviate/README.md)         | ✅          |         |
 
 ## How to contribute
 
