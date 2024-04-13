@@ -13,9 +13,9 @@ and is available on multiple platforms.
 
 ## Running the Stack
 
-### Standalone
+### How to Run
 
-Inside `standalone` directory, run `docker-compose up` to start the connector.
+Inside `standalone` or `cluster` directory, run `docker-compose up` to start the connector.
 
 #### Port Configurations
 
@@ -25,13 +25,10 @@ Inside `standalone` directory, run `docker-compose up` to start the connector.
 
 ## Configurations
 
-All the configurations are available in folder `standalone/config/local.ini`.
-
 Default authentication credentials:
 - Username: `admin`
 - Password: `password`
 - Secret: `secret`
-
 
 
 
