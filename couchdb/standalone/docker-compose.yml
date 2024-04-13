@@ -1,0 +1,22 @@
+---
+version: '3'
+
+services:
+  couchdb:
+    container_name: couchdb
+    image: couchdb:latest
+    ports:
+      - 5984:5984
+    volumes:
+      - ./config/local.ini:/opt/couchdb/etc/local.ini
+      - couchdb_data:/opt/couchdb/data
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5984/_up"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+
+volumes:
+  couchdb_data:

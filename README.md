@@ -43,12 +43,13 @@ use `-d` to start compose in detach mode
 | Prometheus Push Gateway                  | ✅          |         |
 | [ScyllaDB](./scylladb/Readme.md)         | ✅          | ✅       |
 | SonarQube                                | ✅          |         |
+| [CouchDB](./couchdb/README.md)           | ✅          |         |
+| [Weaviate](./weaviate/README.md)         | ✅          |         |
+| [Redis](./redis/README.md) [In-Progress] | ✅          |         |
 | KSQLDB      [Planned]                    |            |         |
 | MySQL      [Planned]                     |            |         |
 | MongoDB      [Planned]                   |            |         |
 | CockroachDB  [Planned]                   |            |         |
-| [Redis](./redis/README.md) [In-Progress] | ✅          |         |
-| [Weaviate](./weaviate/README.md)         | ✅          |         |
 
 ## How to contribute
 
