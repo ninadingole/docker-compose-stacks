@@ -50,6 +50,7 @@ use `-d` to start compose in detach mode
 | MySQL      [Planned]                     |            |         |
 | MongoDB      [Planned]                   |            |         |
 | CockroachDB  [Planned]                   |            |         |
+| [Jenkins](./jenkins/README.md)         | ✅          |         |
 
 ## How to contribute
 
