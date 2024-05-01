@@ -1,0 +1,19 @@
+---
+version: '3'
+
+services:
+  couchdb:
+    image: bitnami/couchdb:latest
+    container_name: couchdb
+    restart: always
+    ports:
+      - "5984:5984"
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=password
+      - COUCHDB_SECRET=secret
+    volumes:
+      - ./data:/bitnami/couchdb
+      - ./config/local.ini:/opt/bitnami/couchdb/etc/local.d/local.ini
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5984/_up"]

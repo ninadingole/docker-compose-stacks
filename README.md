@@ -30,26 +30,33 @@ use `-d` to start compose in detach mode
 
 ## Stacks
 
-| Stack                            | Standalone | Cluster |
-| -------------------------------- | ---------- | ------- |
-| Apache Kafka                     | ✅         |  ✅     |
-| Apache Kafka Kraft               | ✅         |         |
-| Debezium - Postgres              | ✅         |         |
-| Debezium - MySQL                 | ✅         |         |
-| Jaeger                           | ✅         |         |
-| [Metabase](./metabase/README.md) | ✅         |         |
-| Postgres                         | ✅         |  ✅     |
-| Prometheus + Grafana             | ✅         |         |
-| Prometheus Push Gateway          | ✅         |         |
-| [ScyllaDB](./scylladb/Readme.md) | ✅         |  ✅     |
-| SonarQube                        | ✅         |         |
-| KSQLDB      [WIP]                |            |         |
-| MySQL      [WIP]                 |            |         |
-| MongoDB      [WIP]               |            |         |
-| [Jenkins](./jenkins/README.md)   | ✅         |         |
+| Stack                                    | Standalone | Cluster |
+|------------------------------------------|------------|---------|
+| Apache Kafka                             | ✅          | ✅       |
+| Apache Kafka Kraft                       | ✅          |         |
+| Debezium - Postgres                      | ✅          |         |
+| Debezium - MySQL                         | ✅          |         |
+| Jaeger                                   | ✅          |         |
+| [Metabase](./metabase/README.md)         | ✅          |         |
+| Postgres                                 | ✅          | ✅       |
+| Prometheus + Grafana                     | ✅          |         |
+| Prometheus Push Gateway                  | ✅          |         |
+| [ScyllaDB](./scylladb/Readme.md)         | ✅          | ✅       |
+| SonarQube                                | ✅          |         |
+| [CouchDB](./couchdb/README.md)           | ✅          | ✅       |
+| [Weaviate](./weaviate/README.md)         | ✅          |         |
+| [Redis](./redis/README.md) [In-Progress] | ✅          |         |
+| KSQLDB      [Planned]                    |            |         |
+| MySQL      [Planned]                     |            |         |
+| MongoDB      [Planned]                   |            |         |
+| CockroachDB  [Planned]                   |            |         |
 
 ## How to contribute
 
 Raise a pull request if you are using docker compose stack and automated it for your daily software development work.
 Happy to review and merge!
 Cheers :D
+
+### 
+
+Thanks to [Bitnami](https://bitnami.com/) for providing the docker images for some of the stacks.

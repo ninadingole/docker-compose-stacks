@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+  couchdb1:
+    image: bitnami/couchdb:latest
+    container_name: couchdb1
+    restart: always
+    ports:
+      - "5984:5984"
+    volumes:
+      - ./data-1:/bitnami/couchdb
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=password
+      - COUCHDB_SECRET=secret
+      - COUCHDB_NODE_NAME=couchdb@node1
+    networks:
+      - couchdb-cluster
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5984/_up"]
+
+  couchdb2:
+    image: bitnami/couchdb:latest
+    container_name: couchdb2
+    restart: always
+    ports:
+      - "5985:5984"
+    volumes:
+      - ./data-2:/bitnami/couchdb
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=password
+      - COUCHDB_SECRET=secret
+      - COUCHDB_NODE_NAME=couchdb@node2
+    networks:
+      - couchdb-cluster
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5984/_up"]
+
+  couchdb3:
+    image: bitnami/couchdb:latest
+    container_name: couchdb3
+    restart: always
+    ports:
+      - "5986:5984"
+    volumes:
+      - ./data-3:/bitnami/couchdb
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=password
+      - COUCHDB_SECRET=secret
+      - COUCHDB_NODE_NAME=couchdb@node3
+    networks:
+      - couchdb-cluster
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5984/_up"]
+
+networks:
+  couchdb-cluster:
+      driver: bridge
