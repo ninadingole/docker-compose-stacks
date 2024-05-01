@@ -46,6 +46,7 @@ use `-d` to start compose in detach mode
 | KSQLDB      [WIP]                |            |         |
 | MySQL      [WIP]                 |            |         |
 | MongoDB      [WIP]               |            |         |
+| [Jenkins](./jenkins/README.md)   | ✅         |         |
 
 ## How to contribute
 
