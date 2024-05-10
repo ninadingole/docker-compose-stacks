@@ -2,3 +2,4 @@ sonarqube/postgre/**
 sonarqube/sonarqube/**
 
 **/.idea/**
+.DS_Store
